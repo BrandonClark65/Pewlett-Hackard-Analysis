@@ -104,8 +104,7 @@ ON (e.emp_no = de.emp_no)
 WHERE (birth_date BETWEEN '1952-01-01' AND '1955-12-31')
 	AND (hire_date BETWEEN '1985-01-01' AND '1988-12-31')
 	AND (de.to_date = '9999-01-01');
-
-
+	
 -- List of managers per department
 SELECT  dm.dept_no,
         d.dept_name,
@@ -120,3 +119,42 @@ FROM dept_manager AS dm
         ON (dm.dept_no = d.dept_no)
     INNER JOIN current_emp AS ce
         ON (dm.emp_no = ce.emp_no);
+		
+SELECT ce.emp_no,
+	ce.first_name,
+	ce.last_name,
+	d.dept_name
+INTO dept_info
+FROM current_emp as ce
+INNER JOIN dept_emp AS de
+ON (ce.emp_no = de.emp_no)
+INNER JOIN departments AS d
+ON (de.dept_no = d.dept_no);
+
+SELECT * FROM retirement_info;
+
+--retiring employees in sales
+SELECT r.emp_no,
+	r.first_name,
+	r.last_name,
+	d.dept_name
+INTO sales_employees
+FROM retirement_info AS r
+INNER JOIN dept_emp AS de
+ON (r.emp_no = de.emp_no)
+INNER JOIN departments AS d
+ON (de.dept_no = d.dept_no)
+WHERE (d.dept_name = 'Sales');
+
+--retiring employees in sales and development
+SELECT r.emp_no,
+	r.first_name,
+	r.last_name,
+	d.dept_name
+INTO sales_development_emp
+FROM retirement_info AS r
+INNER JOIN dept_emp AS de
+ON (r.emp_no = de.emp_no)
+INNER JOIN departments AS d
+ON (de.dept_no = d.dept_no)
+WHERE d.dept_name IN ('Sales', 'Development');
