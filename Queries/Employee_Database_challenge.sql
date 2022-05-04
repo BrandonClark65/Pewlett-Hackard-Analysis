@@ -23,3 +23,10 @@ INTO unique_titles
 FROM retirement_titles AS r
 WHERE (r.to_date = '9999-01-01')
 ORDER BY r.emp_no, r.to_date DESC;
+
+-- Retrieve the number of employees by most recent job title about to retire
+SELECT COUNT(title),title
+INTO retiring_titles
+FROM unique_titles
+GROUP BY title
+ORDER BY count DESC;
