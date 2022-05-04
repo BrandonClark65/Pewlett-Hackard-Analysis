@@ -15,12 +15,11 @@ ORDER BY e.emp_no;
 SELECT * FROM retirement_titles;
 
 -- Use Dictinct with Orderby to remove duplicate rows
-SELECT DISTINCT ON (______) _____,
-______,
-______,
-______
-
-INTO nameyourtable
-FROM _______
-WHERE _______
-ORDER BY _____, _____ DESC;
+SELECT DISTINCT ON (r.emp_no) r.emp_no,
+    r.first_name,
+    r.last_name,
+    r.title
+INTO unique_titles
+FROM retirement_titles AS r
+WHERE (r.to_date = '9999-01-01')
+ORDER BY r.emp_no, r.to_date DESC;
